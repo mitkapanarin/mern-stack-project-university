@@ -26,6 +26,13 @@ FacultyRoute.post("/create-faculty/:universityID", async (req, res) => {
     const { name, address } = req.body;
     const universityOwner = req.params.universityID;
     const newFaculty = new FacultyModel({ name, address, universityOwner });
+    const checFacultyName = await FacultyModel.findOne({ name });
+
+    if (checFacultyName) {
+      res.status(400).json({ message: 'Name already exists' });
+      return;
+    }
+
     await newFaculty.save();
     return res.status(200).json({
       message: "Faculty created successfully",
