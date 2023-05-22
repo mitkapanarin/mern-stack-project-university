@@ -1,56 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const readData = JSON.parse(localStorage.getItem("userState"));
+const readData = JSON.parse(localStorage.getItem("universityState"));
 // Retrieving the "userState" data from the localStorage and parsing it as JSON
 
 const initialState = {
-  username: readData?.username || "",
-  email: readData?.email || "",
-  token: readData?.token || "", 
-  userID: readData?.userID || "",
+  name: readData?.name || "",
+  address: readData?.address || "",
+  faculties: readData?.faculties || "", 
 };
 // Defining the initial state object with properties retrieved from "readData"
 // If any property is missing or undefined, it falls back to an empty string
 
 export const userSlice = createSlice({ // Creating a Redux slice named "userSlice" with initial state and reducer functions
-  name: "User",
+  name: "University",
   initialState,
   reducers: {
     login: (state, action) => {
-      const { email, userID, token, username } = action.payload;
-      // Extracting email, id, token, and name from the action payload
+      const { address, faculties, name } = action.payload;
+      // Extracting address, id, faculties, and name from the action payload
 
-      state.email = email;
-      state.userID = userID;
-      state.token = token;
-      state.username = username;
+      state.address = address;
+      state.faculties = faculties;
+      state.name = name;
       // Updating the state properties with the new values from the action payload
 
-      localStorage.setItem("userState", JSON.stringify(state));
+      localStorage.setItem("universityState", JSON.stringify(state));
       // Storing the updated state in the localStorage as a stringified JSON
     },
-    updateUserStateData: (state, action, username) => {
-      const { email, userID, token } = action.payload;
-      state.email = email;
-      state.userID = userID;
-      state.token = token;
-      state.username = username;
     
-      localStorage.setItem('userState', JSON.stringify(state));
+    updateUniversityStateData: (state, action, name) => {
+      const { address, faculties } = action.payload;
+      state.address = address;
+      state.faculties = faculties;
+      state.name = name;
+    
+      localStorage.setItem('universityState', JSON.stringify(state));
     },
 
     logout: (state) => {
-      state.email = "";
-      state.token = "";
-      state.userID = "";
-      state.username = "";
+      state.address = "";
+      state.faculties = "";
+      state.name = "";
       // Resetting the state properties to empty strings
 
-      localStorage.removeItem("userState");
-      // Removing the "userState" data from the localStorage
+      localStorage.removeItem("universityState");
+      // Removing the "UniversityState" data from the localStorage
     },
   },
 });
 
-export const { login, logout, updateUserStateData } = userSlice.actions;
-// Exporting the generated action creators for the login, logout, and updateUserStateData reducers
+export const { login, logout, updateUniversityStateData } = userSlice.actions;
