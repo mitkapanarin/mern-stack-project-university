@@ -1,27 +1,39 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  createApi,
+  fetchBaseQuery,
+  BaseQueryFn,
+} from "@reduxjs/toolkit/query/react";
+import {
+  CreateUniversityRequest,
+  DeleteUniversityRequest,
+  IUniversity,
+  UpdateUniversityRequest,
+} from "../../types/university.interface";
+
+const baseQuery: BaseQueryFn = async ({ url, method, body }) => {
+  const response = await fetch(url, { method, body });
+  return response.json();
+};
 
 export const UniversityApi = createApi({
-
   reducerPath: "UniversityApi",
-
   tagTypes: ["University"],
-
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/universities`, 
-  }), 
+    baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/universities`,
+  }),
 
   endpoints: (builder) => ({
-    getUniversity: builder.query({
-      query: (name) => `/get-one-university/:universityID`,
-      providesTags: ["University"], 
-    }),
-
-    getAllUniversities: builder.query({
-      query: ({ universityID }) => `/get-all-universities/${universityID}`,
+    getUniversity: builder.query<IUniversity, number>({
+      query: (universityID) => `/get-one-university/${universityID}`,
       providesTags: ["University"],
     }),
 
-    updateUniversity: builder.mutation({
+    getAllUniversities: builder.query<IUniversity[], undefined>({
+      query: () => "/get-all-universities",
+      providesTags: ["University"],
+    }),
+
+    updateUniversity: builder.mutation<void, UpdateUniversityRequest>({
       query: (body) => ({
         url: `/update-university/${body.universityID}`,
         method: "PUT",
@@ -30,7 +42,7 @@ export const UniversityApi = createApi({
       invalidatesTags: ["University"],
     }),
 
-    createUniversity: builder.mutation({
+    createUniversity: builder.mutation<void, CreateUniversityRequest>({
       query: (body) => ({
         url: "/create-university",
         method: "POST",
@@ -39,17 +51,20 @@ export const UniversityApi = createApi({
       invalidatesTags: ["University"],
     }),
 
-    deleteUniversity: builder.mutation({
-      query: ({ universityID}) => ({
-        url: `/delete-task/${universityID}`,
+    deleteUniversity: builder.mutation<void, DeleteUniversityRequest>({
+      query: (universityID) => ({
+        url: `/delete-university/${universityID}`,
         method: "DELETE",
       }),
       invalidatesTags: ["University"],
     }),
-
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const{useCreateUniversityMutation, useDeleteUniversityMutation, useGetAllUniversitiesQuery, useGetUniversityQuery, useUpdateUniversityMutation} = UniversityApi
+export const {
+  useCreateUniversityMutation,
+  useDeleteUniversityMutation,
+  useGetAllUniversitiesQuery,
+  useGetUniversityQuery,
+  useUpdateUniversityMutation,
+} = UniversityApi;
