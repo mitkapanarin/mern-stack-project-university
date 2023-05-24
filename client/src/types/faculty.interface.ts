@@ -1,4 +1,4 @@
-export interface Faculty {
+export interface iFaculty {
   _id: string;
   name: string;
   address: string;
@@ -7,23 +7,23 @@ export interface Faculty {
 
 export interface GetAllFacultiesResponse {
   message: string;
-  Faculty: Faculty[];
+  Faculty: iFaculty[];
 }
 
 export interface CreateFacultyRequest {
   name: string;
   address: number;
-  universityID: number;
+  _id: number;
   body: string | number;
 }
 
 export interface DeleteFacultyRequest {
-  universityID: number;
+  _id: number;
   facultyID: number;
 }
 
 export interface EditFacultyRequest {
-  universityID: number;
+  _id: number;
   facultyID: number;
-  updatedData: Partial<Faculty>;
+  updatedData: Partial<iFaculty>;
 }

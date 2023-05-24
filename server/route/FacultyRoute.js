@@ -3,11 +3,11 @@ import { FacultyModel } from '../model/FacyltyModel.js'
 
 export const FacultyRoute = express.Router()
 
-FacultyRoute.get("/get-all-faculties/:universityID", async (req, res) => {
+FacultyRoute.get("/get-all-faculties/:_id", async (req, res) => {
   try {
-    const { universityID } = req.params
+    const { _id } = req.params
     const getAllFaculties = await FacultyModel.find({
-      universityOwner: universityID
+      universityOwner: _id
     })
     res.status(200).json({
       message: "success",
@@ -21,10 +21,10 @@ FacultyRoute.get("/get-all-faculties/:universityID", async (req, res) => {
   }
 })
 
-FacultyRoute.post("/create-faculty/:universityID", async (req, res) => {
+FacultyRoute.post("/create-faculty/:_id", async (req, res) => {
   try {
     const { name, address } = req.body;
-    const universityOwner = req.params.universityID;
+    const universityOwner = req.params._id;
     const newFaculty = new FacultyModel({ name, address, universityOwner });
     const checFacultyName = await FacultyModel.findOne({ name });
 
@@ -45,7 +45,7 @@ FacultyRoute.post("/create-faculty/:universityID", async (req, res) => {
 });
 
 
-FacultyRoute.delete("/delete-faculty/:universityID/:facultyID", async (req, res) => {
+FacultyRoute.delete("/delete-faculty/:_id/:facultyID", async (req, res) => {
   try {
     const { facultyID } = req.params;
     await FacultyModel.findByIdAndDelete(facultyID);
@@ -60,9 +60,9 @@ FacultyRoute.delete("/delete-faculty/:universityID/:facultyID", async (req, res)
 });
 
 
-FacultyRoute.put("/update-faculty/:universityID/:facultyID", async (req, res) => {
+FacultyRoute.put("/update-faculty/:_id/:facultyID", async (req, res) => {
   try {
-    const { universityID, facultyID } = req.params;
+    const { _id, facultyID } = req.params;
     const { name, address } = req.body;
     const updatedFaculty = await FacultyModel.findByIdAndUpdate(
       facultyID,

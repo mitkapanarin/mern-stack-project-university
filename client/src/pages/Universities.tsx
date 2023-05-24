@@ -1,6 +1,7 @@
-import { RootState, useGetAllUniversitiesQuery } from "../store";
 import { useSelector } from "react-redux";
+import { RootState, useGetAllUniversitiesQuery } from "../store";
 import { IUniversity } from "../types/university.interface";
+import UniversityCard from "../components/UniversityCard";
 
 const Universities = () => {
   const state = useSelector((x: RootState) => x);
@@ -8,10 +9,11 @@ const Universities = () => {
 
   const { data } = useGetAllUniversitiesQuery(undefined);
   console.log(data);
+  
   return (
-    <div>
+    <div className="grid grid-cols-4 gap-4">
       {data?.map((item: IUniversity) => (
-        <div key={item?._id}>{item?.name}</div>
+        <UniversityCard key={item?._id} {...item} />
       ))}
     </div>
   );

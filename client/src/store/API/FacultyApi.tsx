@@ -6,7 +6,11 @@ import {
   GetAllFacultiesResponse,
 } from "../../types/faculty.interface";
 
-// Define a service using a base URL and expected endpoints
+const baseQuery: BaseQueryFn = async ({ url, method, body }) => {
+  const response = await fetch(url, { method, body });
+  return response.json();
+};
+
 export const FacultyApi = createApi({
   reducerPath: "FacultyApi",
   tagTypes: ["Faculty"],
@@ -15,27 +19,27 @@ export const FacultyApi = createApi({
   }),
   endpoints: (builder) => ({
     getAllFaculties: builder.query<GetAllFacultiesResponse, string>({
-      query: (universityID) => `/get-all-faculties/${universityID}`,
+      query: (_id) => `/get-all-faculties/${_id}`,
       providesTags: ["Faculty"],
     }),
     createFaculty: builder.mutation<void, CreateFacultyRequest>({
-      query: ({ body, universityID }) => ({
-        url: `/create-faculty/${universityID}`,
+      query: ({ body, _id }) => ({
+        url: `/create-faculty/${_id}`,
         method: "POST",
         body,
       }),
       invalidatesTags: ["Faculty"],
     }),
     deleteFaculty: builder.mutation<void, DeleteFacultyRequest>({
-      query: ({ universityID, facultyID }) => ({
-        url: `/delete-faculty/${universityID}/${facultyID}`,
+      query: ({ _id, facultyID }) => ({
+        url: `/delete-faculty/${_id}/${facultyID}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Faculty"],
     }),
     editFaculty: builder.mutation<void, EditFacultyRequest>({
-      query: ({ universityID, facultyID, updatedData }) => ({
-        url: `/update-faculty/${universityID}/${facultyID}`,
+      query: ({ _id, facultyID, updatedData }) => ({
+        url: `/update-faculty/${_id}/${facultyID}`,
         method: "PUT",
         body: updatedData,
       }),
@@ -48,7 +52,7 @@ export const FacultyApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
   useCreateFacultyMutation,
-  useDeleteFacultyMutation,
   useEditFacultyMutation,
   useGetAllFacultiesQuery,
+  useDeleteFacultyMutation
 } = FacultyApi;

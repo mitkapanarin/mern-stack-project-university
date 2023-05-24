@@ -28,13 +28,13 @@ UniversityRoute.post('/create-university', async (req, res) => {
 
 
 // Рута за ажурирање на универзитет
-UniversityRoute.put('/update-university/:universityID', async (req, res) => {
+UniversityRoute.put('/update-university/:_id', async (req, res) => {
   try {
-    const { universityID } = req.params;
+    const { _id } = req.params;
     const { name, address, faculties } = req.body;
 
     const updatedUniversity = await UniversityModel.findByIdAndUpdate(
-      universityID,
+      _id,
       {
         name,
         address,
@@ -56,10 +56,10 @@ UniversityRoute.put('/update-university/:universityID', async (req, res) => {
 });
 
 // Рута за добивање на еден универзитет
-UniversityRoute.get('/get-one-university/:universityID', async (req, res) => {
+UniversityRoute.get('/get-one-university/:_id', async (req, res) => {
   try {
-    const { universityID } = req.params;
-    const university = await UniversityModel.findById(universityID);
+    const { _id } = req.params;
+    const university = await UniversityModel.findById(_id);
 
     if (!university) {
       res.status(404).json({ message: 'University not found' });
@@ -85,10 +85,10 @@ UniversityRoute.get('/get-all-universities', async (req, res) => {
 });
 
 // Рута за бришење на универзитет
-UniversityRoute.delete('/delete-university/:universityID', async (req, res) => {
+UniversityRoute.delete('/delete-university/:_id', async (req, res) => {
   try {
-    const { universityID } = req.params;
-    const deletedUniversity = await UniversityModel.findByIdAndDelete(universityID);
+    const { _id } = req.params;
+    const deletedUniversity = await UniversityModel.findByIdAndDelete(_id);
 
     if (!deletedUniversity) {
       res.status(404).json({ message: 'University not found' });

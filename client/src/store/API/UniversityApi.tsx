@@ -23,8 +23,8 @@ export const UniversityApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getUniversity: builder.query<IUniversity, number>({
-      query: (universityID) => `/get-one-university/${universityID}`,
+    getUniversity: builder.query<IUniversity, string>({
+      query: (_id) => `/get-one-university/${_id}`,
       providesTags: ["University"],
     }),
 
@@ -33,9 +33,9 @@ export const UniversityApi = createApi({
       providesTags: ["University"],
     }),
 
-    updateUniversity: builder.mutation<void, UpdateUniversityRequest>({
-      query: (body) => ({
-        url: `/update-university/${body.universityID}`,
+    updateUniversity: builder.mutation({
+      query: ({ body, _id }) => ({
+        url: `/update-university/${_id}`,
         method: "PUT",
         body,
       }),
@@ -52,8 +52,8 @@ export const UniversityApi = createApi({
     }),
 
     deleteUniversity: builder.mutation<void, DeleteUniversityRequest>({
-      query: (universityID) => ({
-        url: `/delete-university/${universityID}`,
+      query: (_id) => ({
+        url: `/delete-university/${_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["University"],

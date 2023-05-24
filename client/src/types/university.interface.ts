@@ -5,6 +5,7 @@ export interface IUniversity {
   name: string;
   address: string;
   faculties: Faculty[];
+  body: string
 }
 
 export interface CreateUniversityRequest {
@@ -14,12 +15,12 @@ export interface CreateUniversityRequest {
 }
 
 export interface DeleteUniversityRequest {
-  universityID: number;
+  _id: string;
 }
 
 export interface UpdateUniversityRequest {
   name: string;
   address: string;
-  universityID: number;
+  _id: string;
   faculties: Faculty[];
 }
