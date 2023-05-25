@@ -1,5 +1,6 @@
 import express from 'express'
 import { FacultyModel } from '../model/FacyltyModel.js'
+import { UniversityModel } from '../model/UniversityModel.js'
 
 export const FacultyRoute = express.Router()
 
@@ -26,16 +27,27 @@ FacultyRoute.post("/create-faculty/:_id", async (req, res) => {
     const { name, address } = req.body;
     const universityOwner = req.params._id;
     const newFaculty = new FacultyModel({ name, address, universityOwner });
-    const checFacultyName = await FacultyModel.findOne({ name });
+    const checkFacultyName = await FacultyModel.findOne({ name });
 
-    if (checFacultyName) {
+    if (checkFacultyName) {
       res.status(400).json({ message: 'Name already exists' });
       return;
     }
 
-    await newFaculty.save();
+    const findUniversity = await UniversityModel.findById(universityOwner);
+
+    if (!findUniversity) {
+      res.status(404).json({ message: 'University not found' });
+      return;
+    }
+
+    findUniversity.faculties.push(newFaculty._id);
+
+    await Promise.all([newFaculty.save(), findUniversity.save()]);
+
     return res.status(200).json({
       message: "Faculty created successfully",
+      newFaculty
     });
   } catch (err) {
     res.status(500).json({
@@ -43,6 +55,7 @@ FacultyRoute.post("/create-faculty/:_id", async (req, res) => {
     });
   }
 });
+
 
 
 FacultyRoute.delete("/delete-faculty/:_id/:facultyID", async (req, res) => {
