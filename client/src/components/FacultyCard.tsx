@@ -4,15 +4,15 @@ import { useEditFacultyMutation } from "../store/API/FacultyApi";
 import { iFaculty } from "../types/faculty.interface";
 import EditUniversityModal from "./EditUniversityModal";
 import DeleteIcon from "./DeleteModal";
+import EditFacultyModal from "./EditFacultyModal";
 
-const FacultyCard = ({ _id, name, address, faculties }: iFaculty) => {
+const FacultyCard = ({ _id, name, address }: iFaculty) => {
   // const [deleteUniversity, { isLoading }] = useDeleteUniversityMutation();
-  const [updateUniversity] = useEditFacultyMutation();
+  const [editFaculty] = useEditFacultyMutation();
 
   const [newUser, setNewUser] = useState({
     name: name,
-    address: address,
-    faculties: faculties,
+    address: address
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +26,7 @@ const FacultyCard = ({ _id, name, address, faculties }: iFaculty) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await updateUniversity({
+      await editFaculty({
         body: newUser,
         id: _id,
       });
@@ -84,7 +84,7 @@ const FacultyCard = ({ _id, name, address, faculties }: iFaculty) => {
           {/* <button  className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           onClick={deleteCard}>Delete</button> */}
           <DeleteIcon _id={_id} />
-          <EditUniversityModal handleChange={handleChange} handleSubmit={handleSubmit} newUser={newUser} id={_id}/>
+          <EditFacultyModal handleChange={handleChange} handleSubmit={handleSubmit} newUser={newUser} id={_id}/>
         </div>
       </div>
     </div>

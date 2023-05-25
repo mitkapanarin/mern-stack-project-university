@@ -69,6 +69,12 @@ FacultyRoute.put("/update-faculty/:_id/:facultyID", async (req, res) => {
       { name, address },
       { new: true }
     );
+
+    if (!updatedFaculty) {
+      res.status(404).json({ message: 'Paculty not found' });
+      return;
+    }
+
     res.status(200).json({
       message: "Faculty updated successfully",
       updatedFaculty,

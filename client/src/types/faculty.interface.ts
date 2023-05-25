@@ -12,18 +12,18 @@ export interface GetAllFacultiesResponse {
 
 export interface CreateFacultyRequest {
   name: string;
-  address: number;
-  _id: number;
-  body: string | number;
+  address: string;
+  _id: string;
+  body: string | string;
 }
 
 export interface DeleteFacultyRequest {
-  _id: number;
-  facultyID: number;
+  _id: string;
+  facultyID: string;
 }
 
 export interface EditFacultyRequest {
-  _id: number;
-  facultyID: number;
+  _id: string;
+  facultyID: string;
   updatedData: Partial<iFaculty>;
 }
