@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const universitySchema = new mongoose.Schema({
   name: {
@@ -11,11 +11,11 @@ const universitySchema = new mongoose.Schema({
   },
   faculties: [
     {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Faculty",
       required: true,
     },
   ],
 });
 
-export const UniversityModel = mongoose.model('University', universitySchema);
-
+export const UniversityModel = mongoose.model("University", universitySchema);
