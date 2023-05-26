@@ -1,5 +1,0 @@
-*password c9BNi7Vs2bd1ryqU
-
-*create-new-faculty are saved in faculty base, but its not saving under university
-
-*faculties that I get in browser under uviversity are seen because they are added when I create university, I added them in falulty array in tunderClient

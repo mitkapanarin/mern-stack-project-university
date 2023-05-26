@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
-const universitySchema = new mongoose.Schema({
+// name
+// address
+// faculties
+
+const UniversitySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -13,9 +17,9 @@ const universitySchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Faculty",
-      required: true,
+      required: false,
     },
   ],
 });
 
-export const UniversityModel = mongoose.model("University", universitySchema);
+export const UniversityModel = mongoose.model("University", UniversitySchema);
