@@ -1,17 +1,17 @@
-import { Faculty } from "./faculty.interface";
+import { iFaculty } from "./faculty.interface";
 
 export interface IUniversity {
   _id: string
   name: string;
   address: string;
-  faculties: Faculty[];
+  faculties: iFaculty[];
   body: string
 }
 
 export interface CreateUniversityRequest {
   name: string;
   address: string;
-  faculties: Faculty[];
+  faculties: iFaculty[];
 }
 
 export interface DeleteUniversityRequest {
@@ -22,5 +22,5 @@ export interface UpdateUniversityRequest {
   name: string;
   address: string;
   _id: string;
-  faculties: Faculty[];
+  faculties: iFaculty[];
 }

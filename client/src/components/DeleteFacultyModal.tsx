@@ -13,7 +13,7 @@ const DeleteIcon = ({ _id }: DeleteFacultyRequest) => {
 
   const confirmDelete = async () => {
     try {
-      await deleteFaculty({_id }); 
+      await deleteFaculty({id }); 
       toast.success('faculty deleted successfully 👌');
       setIsOpen(false);
     } catch (err) {

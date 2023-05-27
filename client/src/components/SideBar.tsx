@@ -74,9 +74,9 @@ const SideBar = ({ children }: { children: JSX.Element }) => {
                 </span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
-                to="/faculties"
+                to="/faculty"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -90,7 +90,7 @@ const SideBar = ({ children }: { children: JSX.Element }) => {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Faculties</span>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </aside>

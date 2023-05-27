@@ -10,7 +10,7 @@ const EditFacultyModal = () => {
   const facultyData = useSelector((x: RootState) => x);
   console.log(facultyData);
 
-  const universityOwner = useSelector((x: RootState) => x._id);
+  const universityOwner = useSelector((x: RootState) => x.id);
   console.log(universityOwner);
 
   const [data, setData] = useState<iFaculty>(facultyData);

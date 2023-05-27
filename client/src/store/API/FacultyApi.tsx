@@ -4,6 +4,7 @@ import {
   DeleteFacultyRequest,
   EditFacultyRequest,
   GetAllFacultiesResponse,
+  iFaculty,
 } from "../../types/faculty.interface";
 
 const baseQuery: BaseQueryFn = async ({ url, method, body }) => {
@@ -18,6 +19,10 @@ export const FacultyApi = createApi({
     baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/faculty`,
   }),
   endpoints: (builder) => ({
+    getFaculty: builder.query<iFaculty, string>({
+      query: ({ _id, facultyID }) => `/get-one-faculty/${_id}/${facultyID}`,
+      providesTags: ["Faculty"],
+    }),
     getAllFaculties: builder.query<GetAllFacultiesResponse, string>({
       query: (_id) => `/get-all-faculties/${_id}`,
       providesTags: ["Faculty"],
@@ -54,5 +59,6 @@ export const {
   useCreateFacultyMutation,
   useEditFacultyMutation,
   useGetAllFacultiesQuery,
-  useDeleteFacultyMutation
+  useDeleteFacultyMutation,
+  useGetFacultyQuery
 } = FacultyApi;

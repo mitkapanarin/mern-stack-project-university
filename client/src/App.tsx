@@ -19,8 +19,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/universities" element={<Universities />} />
           <Route path="/universities/:id" element={<UniversityDetails />} />
-          <Route path="/faculties" element={<Faculties />} />
-          <Route path="/faculties/:id" element={<FacultyDetails />} />
+          {/* <Route path="/faculty" element={<Faculties />} />
+          <Route path="/facylty/:id" element={<FacultyDetails />} /> */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </SideBar>

@@ -28,8 +28,9 @@ const UniversityDetails = () => {
 
   return (
     <div>
-      <h2>{university?.name}</h2>
-      <p>{university?.address}</p>
+      <h2 className="text-2xl font-bold text-center mb-8 mt-6">Welcome to university of "{ university?.name }" </h2>
+      <p className="text-2xl font-bold mb-8 "> This is our email adress for contact: {university?.address}</p>
+      <p className="text-2xl mb-6 ">Here yo can see all facultiies that belongs to our university</p>
       <ol>
         {university?.faculties?.map((item) => (
           <li key={nanoid()}>
