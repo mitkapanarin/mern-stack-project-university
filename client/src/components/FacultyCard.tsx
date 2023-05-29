@@ -6,13 +6,13 @@ import EditUniversityModal from "./EditUniversityModal";
 import DeleteIcon from "./DeleteModal";
 import EditFacultyModal from "./EditFacultyModal";
 
-const FacultyCard = ({ _id, name, address }: iFaculty) => {
+const FacultyCard = ({ _id, name, email }: iFaculty) => {
   // const [deleteUniversity, { isLoading }] = useDeleteUniversityMutation();
   const [editFaculty] = useEditFacultyMutation();
 
   const [newUser, setNewUser] = useState({
     name: name,
-    address: address
+    email: email
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +58,7 @@ const FacultyCard = ({ _id, name, address }: iFaculty) => {
               {name}
             </h5>
           </a>
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{address}</p>
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{email}</p>
         </div>
       <div className="p-5 flex items-center justify-between">
         <div className="flex space-x-2">

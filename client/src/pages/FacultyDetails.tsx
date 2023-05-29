@@ -25,7 +25,7 @@ const FacultyDetails = () => {
         Welcome to the faculty of "{faculty?.name}"
       </h2>
       <p className="text-2xl font-bold mb-8">
-        This is our email address for contact: {faculty?.address}
+        This is our email email for contact: {faculty?.email}
       </p>
       <p className="text-2xl mb-6">
         Here you can see all faculties that belong to our faculty:

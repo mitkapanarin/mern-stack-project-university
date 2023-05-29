@@ -20,7 +20,7 @@ universityRoutes.post("/create", async (req, res) => {
     if (uniqueEmail) {
       return res
         .status(400)
-        .json({ message: "University with same email address already exists" });
+        .json({ message: "University with same email email already exists" });
     }
 
     const newUniversity = new UniversityModel(req.body);

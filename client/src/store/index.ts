@@ -14,6 +14,7 @@ export const store = configureStore({
   reducer: {
     [UniversityApi.reducerPath]: UniversityApi.reducer,
     [FacultyApi.reducerPath]: FacultyApi.reducer,
+    // User: userSlice.reducer, // Configures the reducer for the userSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

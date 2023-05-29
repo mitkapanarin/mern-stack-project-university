@@ -1,8 +1,4 @@
-import {
-  createApi,
-  fetchBaseQuery,
-  BaseQueryFn,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   CreateUniversityRequest,
   DeleteUniversityRequest,
@@ -14,23 +10,23 @@ export const UniversityApi = createApi({
   reducerPath: "UniversityApi",
   tagTypes: ["University"],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/universities`,
+    baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   }),
 
   endpoints: (builder) => ({
     getUniversity: builder.query<IUniversity, string>({
-      query: (_id) => `/get-one-university/${_id}`,
+      query: (_id) => `/api/university/get-one/${_id}`,
       providesTags: ["University"],
     }),
 
     getAllUniversities: builder.query<IUniversity[], undefined>({
-      query: () => "/get-all-universities",
+      query: () => "/api/university/get-all",
       providesTags: ["University"],
     }),
 
-    updateUniversity: builder.mutation({
-      query: ({ body, _id }) => ({
-        url: `/update-university/${_id}`,
+    updateUniversity: builder.mutation<string, UpdateUniversityRequest>({
+      query: (body) => ({
+        url: `/api/university/update`,
         method: "PUT",
         body,
       }),
@@ -39,16 +35,16 @@ export const UniversityApi = createApi({
 
     createUniversity: builder.mutation<void, CreateUniversityRequest>({
       query: (body) => ({
-        url: "/create-university",
+        url: "/api/university/create",
         method: "POST",
         body,
       }),
       invalidatesTags: ["University"],
     }),
 
-    deleteUniversity: builder.mutation<void, DeleteUniversityRequest>({
+    deleteUniversity: builder.mutation<string, DeleteUniversityRequest>({
       query: (_id) => ({
-        url: `/delete-university/${_id}`,
+        url: `/api/university/delete/${_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["University"],

@@ -17,8 +17,8 @@ const App = () => {
       <SideBar>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/universities" element={<Universities />} />
-          <Route path="/universities/:id" element={<UniversityDetails />} />
+          <Route path="/api/university" element={<Universities />} />
+          <Route path="/api/university/:id" element={<UniversityDetails />} />
           {/* <Route path="/faculty" element={<Faculties />} />
           <Route path="/facylty/:id" element={<FacultyDetails />} /> */}
           <Route path="*" element={<ErrorPage />} />

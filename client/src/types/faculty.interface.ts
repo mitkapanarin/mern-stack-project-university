@@ -1,7 +1,7 @@
 export interface iFaculty {
   _id: string;
   name: string;
-  address: string;
+  email: string;
   universityOwner: string;
 }
 
@@ -12,7 +12,7 @@ export interface GetAllFacultiesResponse {
 
 export interface CreateFacultyRequest {
   name: string;
-  address: string;
+  email: string;
   _id: string;
   body: string | string;
 }
