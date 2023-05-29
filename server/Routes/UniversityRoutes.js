@@ -73,7 +73,7 @@ universityRoutes.delete("/delete/:id", async (req, res) => {
   }
 });
 
-// ✅ Delete 1 University by ID
+// ✅ Update 1 University by ID
 
 universityRoutes.put("/update", async (req, res) => {
   const { name, email, totalStudents, image, universityID } = req.body;

@@ -1,23 +1,31 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const FacultySchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+    default: "",
+    minlength: 3,
   },
-  address: {
+  email: {
     type: String,
-    required: false
+    required: true,
+    trim: true,
+    default: "",
+    minlength: 3,
+    unique: true,
   },
-  subject: {
+  image: {
     type: String,
-    required: false
+    default: "",
+    required: false,
   },
   university: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "University",
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-export const FacultyModel = mongoose.model(' Faculty', FacultySchema )
+export const FacultyModel = mongoose.model(" Faculty", FacultySchema);
