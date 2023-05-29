@@ -10,11 +10,6 @@ import {
   UpdateUniversityRequest,
 } from "../../types/university.interface";
 
-const baseQuery: BaseQueryFn = async ({ url, method, body }) => {
-  const response = await fetch(url, { method, body });
-  return response.json();
-};
-
 export const UniversityApi = createApi({
   reducerPath: "UniversityApi",
   tagTypes: ["University"],

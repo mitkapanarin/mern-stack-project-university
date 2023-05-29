@@ -7,11 +7,6 @@ import {
   iFaculty,
 } from "../../types/faculty.interface";
 
-const baseQuery: BaseQueryFn = async ({ url, method, body }) => {
-  const response = await fetch(url, { method, body });
-  return response.json();
-};
-
 export const FacultyApi = createApi({
   reducerPath: "FacultyApi",
   tagTypes: ["Faculty"],
@@ -19,7 +14,13 @@ export const FacultyApi = createApi({
     baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/faculty`,
   }),
   endpoints: (builder) => ({
-    getFaculty: builder.query<iFaculty, string>({
+    getFaculty: builder.query<
+      iFaculty,
+      {
+        _id: string;
+        facultyID: string;
+      }
+    >({
       query: ({ _id, facultyID }) => `/get-one-faculty/${_id}/${facultyID}`,
       providesTags: ["Faculty"],
     }),
@@ -60,5 +61,5 @@ export const {
   useEditFacultyMutation,
   useGetAllFacultiesQuery,
   useDeleteFacultyMutation,
-  useGetFacultyQuery
+  useGetFacultyQuery,
 } = FacultyApi;
