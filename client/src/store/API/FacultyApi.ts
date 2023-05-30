@@ -11,7 +11,7 @@ export const FacultyApi = createApi({
   reducerPath: "FacultyApi",
   tagTypes: ["Faculty"],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/faculty`,
+    baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/api/faculty`,
   }),
   endpoints: (builder) => ({
     getFaculty: builder.query<

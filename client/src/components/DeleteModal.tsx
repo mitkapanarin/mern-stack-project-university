@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RootState, useDeleteUniversityMutation } from '../store';
+import { RootState, useDeleteUniversityMutation } from '../store/store';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { DeleteUniversityRequest } from '../types/university.interface';

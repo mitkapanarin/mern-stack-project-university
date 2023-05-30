@@ -7,7 +7,6 @@ export interface IUniversity {
   totalStudents: number;
   image: string;
   faculties: iFaculty[];
-  body: string
 }
 
 export interface CreateUniversityRequest {

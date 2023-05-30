@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const SideBar = ({ children }: { children: JSX.Element }) => {
@@ -53,7 +52,7 @@ const SideBar = ({ children }: { children: JSX.Element }) => {
             </li>
             <li>
               <Link
-                to="/universities"
+                to="/api/university"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -101,4 +100,3 @@ const SideBar = ({ children }: { children: JSX.Element }) => {
 };
 
 export default SideBar;
-

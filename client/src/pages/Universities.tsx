@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState, useGetAllUniversitiesQuery } from "../store";
+import { RootState, useGetAllUniversitiesQuery } from "../store/store";
 import { IUniversity } from "../types/university.interface";
 import UniversityCard from "../components/UniversityCard";
 
