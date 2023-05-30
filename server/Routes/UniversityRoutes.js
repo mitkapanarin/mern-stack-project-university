@@ -1,5 +1,34 @@
 import express from "express";
 import { UniversityModel } from "../Model/UniversityModel.js";
+import dotenv from "dotenv";
+import { S3Client } from "@aws-sdk/client-s3";
+import multer from "multer";
+import multerS3 from "multer-s3";
+
+dotenv.config();
+
+const s3 = new S3Client({
+  region: process.env.S3_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  },
+});
+
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: process.env.S3_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      const fileName = `${Date.now().toString()}_${file.originalname}`
+      cb(null, fileName)
+    },
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+  })
+})
 
 export const universityRoutes = express.Router();
 
@@ -75,12 +104,13 @@ universityRoutes.delete("/delete/:id", async (req, res) => {
 
 // ✅ Update 1 University by ID
 
-universityRoutes.put("/update", async (req, res) => {
-  const { name, email, totalStudents, image, universityID } = req.body;
+universityRoutes.put("/update", upload.single("image"), async (req, res) => {
+  const { name, email, totalStudents, universityID } = req?.body;
+  const { location } = req?.file;
   try {
     const findUniversity = await UniversityModel.findByIdAndUpdate(
       universityID,
-      { name, email, totalStudents, image }
+      { name, email, totalStudents, image: location },
     );
     if (!findUniversity) {
       return res.status(404).json({ message: "University not found" });
