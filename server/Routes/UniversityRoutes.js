@@ -113,7 +113,7 @@ universityRoutes.put("/update", upload.single("image"), async (req, res) => {
       { name, email, totalStudents, image: location },
     );
     if (!findUniversity) {
-      return res.status(404).json({ message: "University not found" });
+      return res.status(404).json({ message: "University wasnt found" });
     }
     res.status(200).json({ message: "University updated successfully" });
   } catch (err) {
