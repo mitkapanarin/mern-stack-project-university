@@ -17,10 +17,6 @@ export interface CreateUniversityRequest {
   faculties: iFaculty[];
 }
 
-export interface DeleteUniversityRequest {
-  _id: string;
-}
-
 export interface UpdateUniversityRequest {
   name: string;
   email: string;

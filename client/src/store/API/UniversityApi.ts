@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   CreateUniversityRequest,
-  DeleteUniversityRequest,
   IUniversity,
   UpdateUniversityRequest,
 } from "../../types/university.interface";
@@ -13,7 +12,6 @@ export const UniversityApi = createApi({
     baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   }),
   endpoints: (builder) => ({
-    
     getUniversity: builder.query<IUniversity, string>({
       query: (_id) => `/api/university/get-one/${_id}`,
       providesTags: ["University"],
@@ -42,8 +40,8 @@ export const UniversityApi = createApi({
       invalidatesTags: ["University"],
     }),
 
-    deleteUniversity: builder.mutation<string, DeleteUniversityRequest>({
-      query: (_id) => ({
+    deleteUniversity: builder.mutation<string, { _id: string }>({
+      query: ({ _id }) => ({
         url: `/api/university/delete/${_id}`,
         method: "DELETE",
       }),
