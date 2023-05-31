@@ -1,10 +1,11 @@
-// UniversityCard.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteUniversityMutation, useUpdateUniversityMutation } from "../../store/API/UniversityApi";
 import { IUniversity } from "../../types/university.interface";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import DeleteModal from "../Modal/DeleteModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UniversityCard = ({
   _id,
@@ -26,31 +27,14 @@ const UniversityCard = ({
   const [updateUniversity] = useUpdateUniversityMutation();
   const [deleteUniversity] = useDeleteUniversityMutation();
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setNewUser((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }));
-  // };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   try {
-  //     await updateUniversity({ body: newUser });
-  //     console.log("University updated successfully");
-  //   } catch (error) {
-  //     console.error("Failed to update university", error);
-  //   }
-  // };
-
   const handleDelete = async () => {
-    try{
+    try {
       await deleteUniversity({ _id });
+      toast.success('University deleted successfully 👌');
       console.log("University deleted successfully");
-    }
-    catch(err){
+    } catch (err) {
       console.log("unable to delete university")
+      toast.error("Couldn't delete, please try again 🤯");
     }
   }
 
@@ -61,13 +45,13 @@ const UniversityCard = ({
       <img className="rounded-t-lg" src={image} alt={name} />
       <div className="p-5 items-center justify-between space-x-2">
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          {name}
+         University name: {name}
         </h5>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {email}
+        University email: {email}
         </p>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {totalStudents}
+         Total number of students: {totalStudents}
         </p>
       </div>
       <div className="p-5 flex items-center justify-between">
@@ -84,6 +68,7 @@ const UniversityCard = ({
             />
           </button>
           <DeleteModal onClick={handleDelete} button={<TrashIcon className="w-6 h-6"/>} />
+          <ToastContainer />
         </div>
       </div>
     </div>
