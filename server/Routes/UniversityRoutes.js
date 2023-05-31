@@ -33,8 +33,9 @@ const upload = multer({
 export const universityRoutes = express.Router();
 
 // ✅ Create 1 University
-universityRoutes.post("/create", async (req, res) => {
-  const { name, email } = req.body;
+universityRoutes.post("/create", upload.single("image"), async (req, res) => {
+  const { name, email, totalStudents } = req?.body;
+  const { location } = req?.file;
   try {
     const findUniversity = await UniversityModel.findOne({ name });
 
@@ -52,7 +53,7 @@ universityRoutes.post("/create", async (req, res) => {
         .json({ message: "University with same email email already exists" });
     }
 
-    const newUniversity = new UniversityModel(req.body);
+    const newUniversity = new UniversityModel({ name, email, totalStudents, image: location });
     await newUniversity.save();
 
     res.status(201).json({ message: "University created successfully" });
