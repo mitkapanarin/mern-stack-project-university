@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetUniversityQuery } from "../store/store";
 import { nanoid } from "@reduxjs/toolkit";
 import { iFaculty } from "../types/faculty.interface";
-import FacultyCard from "../components/FacultyCard";
+import FacultyCard from "../components/Card/FacultyCard";
 import {useGetAllFacultiesQuery} from "../store/API/FacultyApi"
 
 const UniversityDetails = () => {
