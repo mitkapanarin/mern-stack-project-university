@@ -50,7 +50,7 @@ const FacultyCard = ({ _id, name, email }: iFaculty) => {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a href="#">
-        <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+        <img className="rounded-t-lg" src={image} alt={name} />
       </a>
       <div className="p-5 items-center justify-between space-x-2">
           <a href="#">
