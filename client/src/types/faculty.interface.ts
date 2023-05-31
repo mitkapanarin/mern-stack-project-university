@@ -2,6 +2,7 @@ export interface iFaculty {
   _id: string;
   name: string;
   email: string;
+  image: string;
   universityOwner: string;
 }
 
@@ -14,7 +15,8 @@ export interface CreateFacultyRequest {
   name: string;
   email: string;
   _id: string;
-  body: string | string;
+  image: string;
+  body: string;
 }
 
 export interface DeleteFacultyRequest {
@@ -22,8 +24,11 @@ export interface DeleteFacultyRequest {
   facultyID: string;
 }
 
-export interface EditFacultyRequest {
+export interface editFacultyRequest {
+  name: string;
+  email: string;
   _id: string;
+  image: string;
   facultyID: string;
   updatedData: Partial<iFaculty>;
 }

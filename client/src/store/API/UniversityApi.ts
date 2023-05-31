@@ -12,8 +12,8 @@ export const UniversityApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   }),
-
   endpoints: (builder) => ({
+    
     getUniversity: builder.query<IUniversity, string>({
       query: (_id) => `/api/university/get-one/${_id}`,
       providesTags: ["University"],

@@ -9,3 +9,9 @@
 * aws-sdk
 * multer
 multer-s3
+
+
+
+* in facyltyRoute add route for get one faculty, so we can use it to get facultyDetails
+
+* FacultyApi------> correct facultyID, universityID?????

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
   CreateFacultyRequest,
   DeleteFacultyRequest,
-  EditFacultyRequest,
+  editFacultyRequest,
   GetAllFacultiesResponse,
   iFaculty,
 } from "../../types/faculty.interface";
@@ -14,42 +14,36 @@ export const FacultyApi = createApi({
     baseUrl: `${import.meta.env.VITE_APP_API_BASE_URL}/api/faculty`,
   }),
   endpoints: (builder) => ({
-    getFaculty: builder.query<
-      iFaculty,
-      {
-        _id: string;
-        facultyID: string;
-      }
-    >({
-      query: ({ _id, facultyID }) => `/get-one-faculty/${_id}/${facultyID}`,
+    getFaculty: builder.query<iFaculty, string>({
+      query: (_id) => `/get-one-faculty/${_id}`,
       providesTags: ["Faculty"],
     }),
     getAllFaculties: builder.query<GetAllFacultiesResponse, string>({
-      query: (_id) => `/get-all-faculties/${_id}`,
+      query: (_id) => `/get-all-of-1-university/${_id}`,
       providesTags: ["Faculty"],
     }),
     createFaculty: builder.mutation<void, CreateFacultyRequest>({
       query: ({ body, _id }) => ({
-        url: `/create-faculty/${_id}`,
+        url: `/create/${_id}`,
         method: "POST",
         body,
       }),
       invalidatesTags: ["Faculty"],
     }),
-    deleteFaculty: builder.mutation<void, DeleteFacultyRequest>({
-      query: ({ _id, facultyID }) => ({
-        url: `/delete-faculty/${_id}/${facultyID}`,
+    deleteFaculty: builder.mutation<string, DeleteFacultyRequest>({
+      query: ({ _id }) => ({
+        url: `/delete/${_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Faculty"],
     }),
-    editFaculty: builder.mutation<void, EditFacultyRequest>({
-      query: ({ _id, facultyID, updatedData }) => ({
-        url: `/update-faculty/${_id}/${facultyID}`,
+    editFaculty: builder.mutation<string, editFacultyRequest>({
+      query: ({ _id, updatedData }) => ({
+        url: `/update/${_id}`,
         method: "PUT",
         body: updatedData,
       }),
-      invalidatesTags: ["Faculty"],
+      invalidatesTags: ["Faculty"]
     }),
   }),
 });
@@ -61,5 +55,4 @@ export const {
   useEditFacultyMutation,
   useGetAllFacultiesQuery,
   useDeleteFacultyMutation,
-  useGetFacultyQuery,
-} = FacultyApi;
+  useGetFacultyQuery} = FacultyApi;

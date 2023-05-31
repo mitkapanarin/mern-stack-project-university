@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEditFacultyMutation } from "../../store/API/FacultyApi";
-import { iFaculty } from "../../types/faculty.interface";
-import EditUniversityModal from "../EditModal/EditFacultyModal";
+import { iFaculty, editFacultyRequest } from "../../types/faculty.interface";
 import DeleteIcon from "../DeleteModal/DeleteFacultyModal";
 import EditFacultyModal from "../EditModal/EditFacultyModal";
 
-const FacultyCard = ({ _id, name, email }: iFaculty) => {
+const FacultyCard = ({ _id, name, email, image }: iFaculty) => {
   // const [deleteUniversity, { isLoading }] = useDeleteUniversityMutation();
-  const [editFaculty] = useEditFacultyMutation();
+  const [editFaculty] = useEditFacultyMutation<editFacultyRequest>();
 
-  const [newUser, setNewUser] = useState({
+  const [newUser, setNewUser] = useState<iFaculty>({
     name: name,
-    email: email
+    email: email,
+    image: image,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,7 @@ const FacultyCard = ({ _id, name, email }: iFaculty) => {
       <div className="p-5 flex items-center justify-between">
         <div className="flex space-x-2">
           <button
-            onClick={() => navigate(`/api/faculty/${_id}`)}
+            onClick={() => navigate(`/api/faculty/get-one-faculty/${_id}`)}
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             See details

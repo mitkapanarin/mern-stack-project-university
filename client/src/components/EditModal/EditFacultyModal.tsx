@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEditFacultyMutation } from '../../store/API/FacultyApi';
 // import { updatefacultyStateData } from '../store/Slices/facultySlice';
 import { iFaculty, editFacultyRequest } from "../../types/faculty.interface";
-import { useNavigate } from "react-router-dom";
 import { RootState } from '../../store/store';
+import { toast } from 'react-toastify';
+
 
 const EditFacultyModal = () => {
   const facultyData = useSelector((x: RootState) => x);
