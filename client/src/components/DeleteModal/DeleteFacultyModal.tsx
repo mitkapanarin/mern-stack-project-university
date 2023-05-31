@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import { RootState, useDeleteUniversityMutation } from '../store/store';
+import { RootState } from '../../store/store';
+import {useDeleteFacultyMutation} from '../../store/API/FacultyApi'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { DeleteUniversityRequest } from '../types/university.interface';
+import { DeleteFacultyRequest } from '../../types/faculty.interface';
 
-const DeleteIcon = ({ _id }: DeleteUniversityRequest) => {
+const DeleteIcon = ({ _id }: DeleteFacultyRequest) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [deleteUniversity, { isLoading }] = useDeleteUniversityMutation();
+  const [deleteFaculty, { isLoading }] = useDeleteFacultyMutation();
   const store = useSelector((x: RootState) => x);
   console.log(store);
 
   const confirmDelete = async () => {
     try {
-      await deleteUniversity({_id }); 
-      toast.success('University deleted successfully 👌');
+      await deleteFaculty({_id }); 
+      toast.success('faculty deleted successfully 👌');
       setIsOpen(false);
     } catch (err) {
       console.log('unable to delete', err);

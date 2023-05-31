@@ -1,11 +1,11 @@
 import React, { useState, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useUpdateUniversityMutation } from '../store/API/UniversityApi';
+import { useUpdateUniversityMutation } from '../../store/API/UniversityApi';
 // import { updateUserStateData } from '../store/Slices/userSlice';
-import { IUniversity } from "../types/university.interface";
+import { IUniversity } from "../../types/university.interface";
 import { useNavigate } from "react-router-dom";
-import { RootState } from '../store/store';
-import {UpdateUniversityRequest} from "../types/university.interface"
+import { RootState } from '../../store/store';
+import {UpdateUniversityRequest} from "../../types/university.interface"
 import { toast } from 'react-toastify';
 
 

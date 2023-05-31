@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateUniversityMutation } from "../../store/API/UniversityApi";
 import { IUniversity } from "../../types/university.interface";
-import EditUniversityModal from "../EditUniversityModal";
-import DeleteIcon from "../DeleteModal";
+import EditUniversityModal from "../EditModal/EditUniversityModal";
+import DeleteIcon from "../DeleteModal/DeleteModal";
 
 const UniversityCard = ({
   _id,
