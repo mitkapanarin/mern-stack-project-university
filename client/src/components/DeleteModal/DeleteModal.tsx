@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { RootState, useDeleteUniversityMutation } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { DeleteUniversityRequest } from '../../types/university.interface';
 
-const DeleteIcon = ({ _id }: DeleteUniversityRequest) => {
+const DeleteIcon = ({ _id }: string) => {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteUniversity, { isLoading }] = useDeleteUniversityMutation();
   const store = useSelector((x: RootState) => x);
