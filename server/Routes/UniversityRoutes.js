@@ -35,14 +35,19 @@ export const universityRoutes = express.Router();
 // ✅ Create 1 University
 universityRoutes.post("/create", upload.single("image"), async (req, res) => {
   const { name, email, totalStudents } = req?.body;
-  const { location } = req?.file;
+  const { location } = req.file ? req.file : {};
+
+  if (!name || !email) {
+    return res.status(400).json({ message: "Name and email are required" });
+  }
+
   try {
     const findUniversity = await UniversityModel.findOne({ name });
 
     if (findUniversity) {
       return res
         .status(400)
-        .json({ message: "University with same name already exists" });
+        .json({ message: "University with the same name already exists" });
     }
 
     const uniqueEmail = await UniversityModel.findOne({ email });
@@ -50,7 +55,7 @@ universityRoutes.post("/create", upload.single("image"), async (req, res) => {
     if (uniqueEmail) {
       return res
         .status(400)
-        .json({ message: "University with same email email already exists" });
+        .json({ message: "University with the same email already exists" });
     }
 
     const newUniversity = new UniversityModel({ name, email, totalStudents, image: location });
@@ -58,9 +63,11 @@ universityRoutes.post("/create", upload.single("image"), async (req, res) => {
 
     res.status(201).json({ message: "University created successfully" });
   } catch (err) {
+    console.error(err); // Log the specific error for debugging purposes
     res.status(500).json({ message: "Unable to create University" });
   }
 });
+
 
 // ✅ Get all Universities
 

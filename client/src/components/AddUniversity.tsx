@@ -1,63 +1,85 @@
-import { useState, FC } from 'react';
-import InputField from './InputField';
-import { useCreateUniversityMutation } from '../store/store';
-import { useSelector } from 'react-redux';
-import { CreateUniversityRequest } from '../types/university.interface';
+import { useState, FC } from "react";
+import InputField from "./InputField";
+import { useCreateUniversityMutation } from "../store/store";
+import { useSelector } from "react-redux";
+import { CreateUniversityRequest } from "../types/university.interface";
 
 interface iAddUniversity {
   button: React.ReactNode;
   onClick: () => Promise<void>;
 }
 
-const AddUniversity: FC<iAddUniversity>  = () => {
+const AddUniversity: FC<iAddUniversity> = () => {
   const userOwner = useSelector((state) => state);
   console.log(userOwner);
 
-
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<CreateUniversityRequest>({
-    name: '',
-    email: '',
+    name: "",
+    email: "",
     totalStudents: 0,
-    image: '',
+    image: null, // Holds the selected file
     faculties: [],
   });
+  
 
-  const [createUniversity] = useCreateUniversityMutation();
+  const [createUniversity] =
+    useCreateUniversityMutation<CreateUniversityRequest>();
 
-  const handleInput =  (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)  => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await createUniversity({
-        body: data,
-      });
+      const requestData: CreateUniversityRequest = {
+        name: data.name,
+        email: data.email,
+        totalStudents: data.totalStudents,
+        image: data.image,
+        faculties: data.faculties,
+      };
+  
+      await createUniversity(requestData);
+  
       setData({
-        name: '',
-        email: '',
+        name: "",
+        email: "",
         totalStudents: 0,
-        image: '',
+        image: null,
         faculties: [],
       });
+  
       setIsOpen(!isOpen);
     } catch (err) {
-      console.log('could not create university', err);
+      console.log("could not create university", err);
     }
   };
+  
+
+  const handleImageInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Get the selected file
+  
+    if (file) {
+      setData((prevData) => ({
+        ...prevData,
+        image: file, // Update the image property with the selected file
+      }));
+    }
+  };
+  
 
   return (
     <>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex items-center justify-center text-4xl font-bold cursor-pointer"
+        className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex items-center justify-center text-xl font-bold cursor-pointer"
       >
-        +
+        Create New University
       </div>
 
       {/* <!-- Main modal --> */}
@@ -66,7 +88,9 @@ const AddUniversity: FC<iAddUniversity>  = () => {
         id="defaultModal"
         tabIndex={-1}
         aria-hidden="true"
-        className={`fixed overlay top-0 left-0 right-0 z-50 ${!isOpen && 'hidden'} w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        className={`fixed overlay top-0 left-0 right-0 z-50 ${
+          !isOpen && "hidden"
+        } w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="flex items-center justify-center min-h-screen">
           <div className="relative w-full max-w-2xl max-h-full">
@@ -74,7 +98,9 @@ const AddUniversity: FC<iAddUniversity>  = () => {
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               {/* <!-- Modal header --> */}
               <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Create university</h3>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  Create university
+                </h3>
                 <button
                   onClick={() => setIsOpen(!isOpen)}
                   type="button"
@@ -100,29 +126,30 @@ const AddUniversity: FC<iAddUniversity>  = () => {
               {/* <!-- Modal body --> */}
               <div className="p-6 space-y-6">
                 <InputField
-                  value={data.university}
+                  value={data.name}
                   onChange={handleInput}
                   label="Name of university"
-                  name="university"
+                  name="name"
                   placeholder="Add university name here"
                   type="text"
                 />
                 <InputField
-                  value={data.description}
+                  value={data.email}
                   onChange={handleInput}
-                  label="university Description"
-                  name="description"
-                  placeholder="Add university Description"
+                  label="university email address"
+                  name="email"
+                  placeholder="Add university email"
                   type="text"
                 />
                 <InputField
-                  value={data.deadline}
+                  value={data.totalStudents.toString()} // Convert to string
                   onChange={handleInput}
-                  label="Deadline"
-                  name="deadline"
-                  placeholder="Select a Deadline"
-                  type="date"
+                  label="Total number of students"
+                  name="totalStudents"
+                  placeholder="Write total number of students here"
+                  type="text"
                 />
+                <input type="file" onChange={handleImageInputChange} />
               </div>
               {/* <!-- Modal footer --> */}
               <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">

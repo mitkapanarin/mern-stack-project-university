@@ -13,7 +13,7 @@ export interface CreateUniversityRequest {
   name: string;
   email: string;
   totalStudents: number;
-  image: string;
+  image: null | File;
   faculties: iFaculty[];
 }
 
