@@ -4,6 +4,7 @@ import { useDeleteUniversityMutation, useUpdateUniversityMutation } from "../../
 import { IUniversity } from "../../types/university.interface";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import DeleteModal from "../Modal/DeleteModal";
+import EditUniversityModal from "../EditModal/EditUniversityModal";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

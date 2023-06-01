@@ -3,6 +3,7 @@ import InputField from "./InputField";
 import { useCreateUniversityMutation } from "../store/store";
 import { useSelector } from "react-redux";
 import { CreateUniversityRequest } from "../types/university.interface";
+import { useNavigate } from "react-router-dom";
 
 interface iAddUniversity {
   button: React.ReactNode;
@@ -13,6 +14,8 @@ const AddUniversity: FC<iAddUniversity> = () => {
   const userOwner = useSelector((state) => state);
   console.log(userOwner);
 
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<CreateUniversityRequest>({
     name: "",
@@ -21,7 +24,7 @@ const AddUniversity: FC<iAddUniversity> = () => {
     image: null, // Holds the selected file
     faculties: [],
   });
-  
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const [createUniversity] =
     useCreateUniversityMutation<CreateUniversityRequest>();
@@ -36,15 +39,14 @@ const AddUniversity: FC<iAddUniversity> = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const requestData: CreateUniversityRequest = {
-        name: data.name,
-        email: data.email,
-        totalStudents: data.totalStudents,
-        image: data.image,
-        faculties: data.faculties,
-      };
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("email", data.email);
+      formData.append("totalStudents", data.totalStudents.toString());
+      formData.append("image", data.image);
+      formData.append("faculties", JSON.stringify(data.faculties));
   
-      await createUniversity(requestData);
+      await createUniversity(formData);
   
       setData({
         name: "",
@@ -54,16 +56,17 @@ const AddUniversity: FC<iAddUniversity> = () => {
         faculties: [],
       });
   
-      setIsOpen(!isOpen);
+      setIsOpen(false);
     } catch (err) {
-      console.log("could not create university", err);
+      console.log("Could not create university", err);
     }
   };
   
-
-  const handleImageInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = event.target.files?.[0]; // Get the selected file
-  
+
     if (file) {
       setData((prevData) => ({
         ...prevData,
@@ -71,20 +74,24 @@ const AddUniversity: FC<iAddUniversity> = () => {
       }));
     }
   };
-  
 
   return (
     <>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex items-center justify-center text-xl font-bold cursor-pointer"
+        className="flex items-center justify-center h-screen"
       >
-        Create New University
+        <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-center text-xl font-bold cursor-pointer">
+          Create New University
+        </div>
       </div>
 
-      {/* <!-- Main modal --> */}
+      {/* Main modal */}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          handleSubmit(e);
+          navigate("/api/university");
+        }}
         id="defaultModal"
         tabIndex={-1}
         aria-hidden="true"
@@ -94,9 +101,9 @@ const AddUniversity: FC<iAddUniversity> = () => {
       >
         <div className="flex items-center justify-center min-h-screen">
           <div className="relative w-full max-w-2xl max-h-full">
-            {/* <!-- Modal content --> */}
+            {/* Modal content */}
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              {/* <!-- Modal header --> */}
+              {/* Modal header */}
               <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Create university
@@ -123,7 +130,7 @@ const AddUniversity: FC<iAddUniversity> = () => {
                   <span className="sr-only">Close modal</span>
                 </button>
               </div>
-              {/* <!-- Modal body --> */}
+              {/* Modal body */}
               <div className="p-6 space-y-6">
                 <InputField
                   value={data.name}
@@ -149,9 +156,9 @@ const AddUniversity: FC<iAddUniversity> = () => {
                   placeholder="Write total number of students here"
                   type="text"
                 />
-                <input type="file" onChange={handleImageInputChange} />
+                <input type="file" onChange={handleImageInputChange} accept="image/*" />
               </div>
-              {/* <!-- Modal footer --> */}
+              {/* Modal footer */}
               <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                   data-modal-hide="defaultModal"
@@ -161,7 +168,10 @@ const AddUniversity: FC<iAddUniversity> = () => {
                   Create university
                 </button>
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                    navigate(`/api/university`);
+                  }}
                   data-modal-hide="defaultModal"
                   type="button"
                   className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
