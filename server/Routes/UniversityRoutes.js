@@ -114,7 +114,7 @@ universityRoutes.delete("/delete/:id", async (req, res) => {
 
 universityRoutes.put("/update", upload.single("image"), async (req, res) => {
   const { name, email, totalStudents, universityID } = req?.body;
-  const { location } = req?.file;
+  const { location } = req.file ? req.file : {};
   try {
     const findUniversity = await UniversityModel.findByIdAndUpdate(
       universityID,

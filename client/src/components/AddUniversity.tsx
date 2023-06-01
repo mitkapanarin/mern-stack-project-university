@@ -45,9 +45,9 @@ const AddUniversity: FC<iAddUniversity> = () => {
       formData.append("totalStudents", data.totalStudents.toString());
       formData.append("image", data.image);
       formData.append("faculties", JSON.stringify(data.faculties));
-  
+
       await createUniversity(formData);
-  
+
       setData({
         name: "",
         email: "",
@@ -55,13 +55,13 @@ const AddUniversity: FC<iAddUniversity> = () => {
         image: null,
         faculties: [],
       });
-  
+
       setIsOpen(false);
     } catch (err) {
       console.log("Could not create university", err);
     }
   };
-  
+
   const handleImageInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -109,7 +109,10 @@ const AddUniversity: FC<iAddUniversity> = () => {
                   Create university
                 </h3>
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                    navigate(`/api/university`);
+                  }}
                   type="button"
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
                   data-modal-hide="defaultModal"
@@ -156,7 +159,18 @@ const AddUniversity: FC<iAddUniversity> = () => {
                   placeholder="Write total number of students here"
                   type="text"
                 />
-                <input type="file" onChange={handleImageInputChange} accept="image/*" />
+                <label
+                  htmlFor="image"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Upload Image
+                </label>
+                <input
+                  name="image"
+                  type="file"
+                  onChange={handleImageInputChange}
+                  accept="image/*"
+                />
               </div>
               {/* Modal footer */}
               <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
