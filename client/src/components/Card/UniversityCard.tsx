@@ -68,6 +68,7 @@ const UniversityCard = ({
               aria-hidden="true"
             />
           </button>
+          <EditUniversityModal/>
           <DeleteModal onClick={handleDelete} button={<TrashIcon className="w-6 h-6"/>} />
           <ToastContainer />
         </div>
