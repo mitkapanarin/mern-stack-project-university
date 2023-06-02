@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDeleteUniversityMutation, useUpdateUniversityMutation } from "../../store/API/UniversityApi";
+import {
+  useDeleteUniversityMutation,
+  useUpdateUniversityMutation,
+} from "../../store/API/UniversityApi";
 import { IUniversity } from "../../types/university.interface";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import DeleteModal from "../Modal/DeleteModal";
-import EditUniversityModal from "../EditModal/EditUniversityModal";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import GreenBadge from "../Badge/GreenBadge";
 
 const UniversityCard = ({
   _id,
@@ -30,29 +33,32 @@ const UniversityCard = ({
 
   const handleDelete = async () => {
     try {
-      await deleteUniversity({ _id });
-      toast.success('University deleted successfully 👌');
-      console.log("University deleted successfully");
+      await toast.promise(deleteUniversity({ _id }), {
+        pending: "Deleting...",
+        success: "University deleted successfully",
+        error: "Couldn't delete, please try again 🤯",
+      });
     } catch (err) {
-      console.log("unable to delete university")
       toast.error("Couldn't delete, please try again 🤯");
     }
-  }
+  };
 
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <img className="rounded-t-lg" src={image} alt={name} />
-      <div className="p-5 items-center justify-between space-x-2">
+    <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <img
+        className="rounded-t-lg max-h-40 w-[100%] object-cover"
+        src={image}
+        alt={name}
+      />
+      <div className="p-5 items-center justify-between">
+        <GreenBadge label={totalStudents} />
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-         University name: {name}
+          {name}
         </h5>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-        University email: {email}
-        </p>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-         Total number of students: {totalStudents}
+          Email: {email}
         </p>
       </div>
       <div className="p-5 flex items-center justify-between">
@@ -68,8 +74,10 @@ const UniversityCard = ({
               aria-hidden="true"
             />
           </button>
-          <EditUniversityModal/>
-          <DeleteModal onClick={handleDelete} button={<TrashIcon className="w-6 h-6"/>} />
+          <DeleteModal
+            onClick={handleDelete}
+            button={<TrashIcon className="w-6 h-6" />}
+          />
           <ToastContainer />
         </div>
       </div>

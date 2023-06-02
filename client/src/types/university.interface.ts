@@ -9,14 +9,6 @@ export interface IUniversity {
   faculties: iFaculty[];
 }
 
-export interface CreateUniversityRequest {
-  name: string;
-  email: string;
-  totalStudents: number;
-  image: null | File;
-  faculties: iFaculty[];
-}
-
 export interface UpdateUniversityRequest {
   name: string;
   email: string;

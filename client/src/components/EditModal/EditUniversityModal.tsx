@@ -5,7 +5,7 @@ import { IUniversity } from "../../types/university.interface";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { UpdateUniversityRequest } from "../../types/university.interface";
-import InputField from "../InputField";
+import InputField from "../Form/InputField";
 import { toast } from "react-toastify";
 
 interface EditUniversityModalProps {

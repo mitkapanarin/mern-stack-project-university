@@ -1,5 +1,5 @@
 import { useState, FC } from "react";
-import InputField from "./InputField";
+import InputField from "./Form/InputField";
 import { useCreateUniversityMutation } from "../store/store";
 import { useSelector } from "react-redux";
 import { CreateUniversityRequest } from "../types/university.interface";

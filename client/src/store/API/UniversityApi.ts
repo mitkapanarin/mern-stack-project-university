@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  CreateUniversityRequest,
   IUniversity,
   UpdateUniversityRequest,
 } from "../../types/university.interface";
@@ -31,7 +30,10 @@ export const UniversityApi = createApi({
       invalidatesTags: ["University"],
     }),
 
-    createUniversity: builder.mutation<void, CreateUniversityRequest>({
+    createUniversity: builder.mutation<
+      void,
+      Omit<IUniversity, "_id" | "faculties">
+    >({
       query: (body) => ({
         url: "/api/university/create",
         method: "POST",
